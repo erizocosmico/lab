@@ -101,7 +101,7 @@ type strategyGetterMock struct {
 }
 
 func (strategyGetterMock) Strategy(_ string) (Strategy, bool) {
-	return func(p Params) bool {
+	return func(v Visitor, p Params) bool {
 		return p["show"].(bool)
 	}, true
 }

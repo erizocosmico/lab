@@ -12,8 +12,8 @@ type Lab interface {
 	Session(Visitor) Session
 }
 
-// Strategy will tell if the given Params should be shown the experiment.
-type Strategy func(Params) bool
+// Strategy will tell if the given Params and Visitor should be shown the experiment.
+type Strategy func(Visitor, Params) bool
 
 // Visitor is something identified by an ID. Represents the visitor of a
 // single session so all features are shown or not during the same session.

@@ -20,7 +20,9 @@ func (s *session) Launch(ID string, fn func()) bool {
 	}
 
 	if aim.shows(s.visitor, s.lab) {
-		fn()
+		if fn != nil {
+			fn()
+		}
 		return true
 	}
 	return false

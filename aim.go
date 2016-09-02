@@ -73,11 +73,12 @@ type strategyAim struct {
 
 func (a *strategyAim) shows(v Visitor, s StrategyGetter) bool {
 	if strategy, ok := s.Strategy(a.id); ok {
-		if a.fn == nil {
-			return false
+		var params = make(Params)
+		if a.fn != nil {
+			params = a.fn(v)
 		}
 
-		return strategy(a.fn(v))
+		return strategy(v, params)
 	}
 	return false
 }
@@ -86,7 +87,8 @@ func (a *strategyAim) shows(v Visitor, s StrategyGetter) bool {
 type Params map[string]interface{}
 
 // AimStrategy will show the experiment to the visitor if the given strategy determines
-// it is ok to show it.
+// it is ok to show it. A callback function can be given to return the Params to call the
+// strategy based on the visitor.
 func AimStrategy(id string, fn func(Visitor) Params) AudienceAim {
 	return &strategyAim{id, fn}
 }

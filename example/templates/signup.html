@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Register</title>
+	</head>
+
+	<body>
+		<h1>Register</h1>
+
+		<form action="/signup" method="POST">
+			<label for="username">Username:</label>
+			<input type="text" name="username" />
+
+			{{if .showRealName}}
+			<label for="name">Real name:</label>
+			<input type="text" name="name" />
+			{{end}}
+
+			<label for="password">Password:</label>
+			<input type="password" name="password" />
+
+			<label for="admin">Is admin:</label>
+			<input type="checkbox" name="admin" value="yes" />
+
+			<button type="submit">Register</button>
+		</form>
+	</body>
+</html>

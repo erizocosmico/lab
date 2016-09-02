@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Main page</title>
+	</head>
+
+	<body>
+		<h1>Example of lab</h1>
+
+		{{if .loggedIn}}
+		You are logged in. {{if .adminOnly}}You are an admin.{{end}}
+		{{else}}
+		<nav>
+			<ul>
+				<li><a href="/signup">Register</a></li>
+			</ul>
+		</nav>
+		{{end}}
+
+		{{if .showNewWelcome}}
+		<p>This is a new cool welcome message.</p>
+		{{else}}
+		<p>This is an old boring welcome message.</p>
+		{{end}}
+	</body>
+</html>

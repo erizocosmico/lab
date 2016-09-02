@@ -9,7 +9,7 @@ import (
 
 func TestLab(t *testing.T) {
 	lab := New()
-	lab.DefineStrategy("is-admin", func(p Params) bool {
+	lab.DefineStrategy("is-admin", func(visitor Visitor, p Params) bool {
 		v, ok := p["admin"].(bool)
 		if !ok {
 			return false
