@@ -1,6 +1,7 @@
 package lab
 
 import (
+	"hash/crc32"
 	"math/rand"
 	"time"
 )
@@ -15,10 +16,6 @@ type AudienceAim interface {
 type StrategyGetter interface {
 	// Strategy returns the Strategy for the given ID.
 	Strategy(string) (Strategy, bool)
-}
-
-type strategyGetter interface {
-	getStrategies() map[string]Strategy
 }
 
 type allVisitors struct {
@@ -41,14 +38,27 @@ type randGenerator interface {
 	Intn(int) int
 }
 
-var rnd randGenerator = rand.New(rand.NewSource(time.Now().UnixNano()))
+var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
+
+// AimRandom will show the experiment randomly.
+func AimRandom() AudienceAim {
+	return &random{rnd}
+}
+
+type random struct {
+	rnd randGenerator
+}
+
+func (r *random) shows(_ Visitor, _ StrategyGetter) bool {
+	return r.rnd.Intn(101)%2 == 0
+}
 
 type percent struct {
 	percent int
 }
 
-func (p *percent) shows(_ Visitor, _ StrategyGetter) bool {
-	return rnd.Intn(101) > p.percent
+func (p *percent) shows(v Visitor, _ StrategyGetter) bool {
+	return crc32.ChecksumIEEE([]byte(v.ID()))%100 < uint32(p.percent)
 }
 
 // AimPercent will randomly show the experiment to n % of the visitors.
@@ -57,22 +67,27 @@ func AimPercent(n int) AudienceAim {
 }
 
 type strategyAim struct {
-	id         string
-	fillParams func(Params)
+	id string
+	fn func(Visitor) Params
 }
 
-func (a *strategyAim) shows(_ Visitor, s StrategyGetter) bool {
-	params := newParams()
-	a.fillParams(params)
+func (a *strategyAim) shows(v Visitor, s StrategyGetter) bool {
 	if strategy, ok := s.Strategy(a.id); ok {
-		return strategy(params)
+		if a.fn == nil {
+			return false
+		}
+
+		return strategy(a.fn(v))
 	}
 	return false
 }
 
+// Params will hold all the parameters to call a strategy.
+type Params map[string]interface{}
+
 // AimStrategy will show the experiment to the visitor if the given strategy determines
 // it is ok to show it.
-func AimStrategy(id string, fn func(Params)) AudienceAim {
+func AimStrategy(id string, fn func(Visitor) Params) AudienceAim {
 	return &strategyAim{id, fn}
 }
 
