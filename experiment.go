@@ -24,7 +24,7 @@ func (e *experiment) Aim(aim AudienceAim) Experiment {
 	if e.aim == nil {
 		e.aim = aim
 	} else {
-		And(e.aim, aim)
+		e.aim = And(e.aim, aim)
 	}
 	return e
 }

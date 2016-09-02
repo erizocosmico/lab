@@ -31,7 +31,8 @@ type lab struct {
 // New returns a new lab.
 func New() Lab {
 	return &lab{
-		strategies: make(map[string]Strategy),
+		strategies:  make(map[string]Strategy),
+		experiments: make(map[string]*experiment),
 	}
 }
 
