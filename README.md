@@ -99,3 +99,4 @@ You can see a silly small web application demo to learn how to use the library i
 ### Credits
 
 Inspired by AirBnb's [trebuchet](https://github.com/airbnb/trebuchet).
+To the author of the scientist gopher, which I couldn't find anywhere.
