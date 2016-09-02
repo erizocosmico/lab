@@ -2,7 +2,7 @@
 
 [![godoc reference](https://cdn.rawgit.com/mvader/2faf5060e6cb109617ef5548836532aa/raw/2f5e2f2e934f6dde4ec4652ff0ae6d5c83cbfd6a/godoc.svg)](https://godoc.org/github.com/mvader/lab) [![Build Status](https://travis-ci.org/mvader/lab.svg?branch=master)](https://travis-ci.org/mvader/lab) [![codecov](https://codecov.io/gh/mvader/lab/branch/master/graph/badge.svg)](https://codecov.io/gh/mvader/lab)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
-![http://i.imgur.com/a0AMGoS.jpg](Gopher doing science)
+![Gopher doing science](http://i.imgur.com/a0AMGoS.jpg)
 
 `lab` is a library to handle feature switches and experiments with users.
 
